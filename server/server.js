@@ -88,7 +88,7 @@ function post(args, data, response) {
                         $time: args.time,
                         $id: args.id
                     });
-                    respond(JSON.stringify({id:args.id}), reponse);
+                    respond(JSON.stringify({id:args.id}), response);
                     break;
                 case 'remote':
                     db.run('UPDATE osmly SET remote = $remote WHERE id = $id', {
