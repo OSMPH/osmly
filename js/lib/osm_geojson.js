@@ -10,8 +10,13 @@ osm_geojson.geojson2osm = function(geo, changeset, osmChange) {
         switch (geo.type) {
             case 'Point':
                 var coord = roundCoords([geo.coordinates]);
-                nodes += '<node id="' + count + '" lat="' + coord[0][1] +
-                '" lon="' + coord[0][0] + '" changeset="' + changeset + '">';
+                if (properties['osm_id'] && properties['osm_version']) {
+                  nodes += '<node id="' + properties['osm_id'] + '" version="' + (properties['osm_version']) + '" lat="' + coord[0][1] +
+                   '" lon="' + coord[0][0] + '" timestamp="' + new Date(Date.now()).toISOString() + '" changeset="' + changeset + '">';
+                } else {
+                  nodes += '<node id="' + count + '" lat="' + coord[0][1] +
+                  '" lon="' + coord[0][0] + '" changeset="' + changeset + '">';
+                }
                 nodes += propertiesToTags(properties);
                 nodes += '</node>';
                 count--;
@@ -130,7 +135,7 @@ osm_geojson.geojson2osm = function(geo, changeset, osmChange) {
     function propertiesToTags(properties) {
         var tags = '';
         for (var tag in properties) {
-            if (properties[tag] !== null) {
+            if (properties[tag] !== null && tag.split('osm_').length === 1) {
                 tags += '<tag k="' + tag + '" v="' + properties[tag] + '"/>';
             }
         }
