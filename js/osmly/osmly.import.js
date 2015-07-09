@@ -346,12 +346,17 @@ osmly.import = (function() {
 
         var geojson = osmly.map.featureLayer.toGeoJSON();
         geojson['features'][0]['properties'] = discardTags();
+        var action = "create";
+        if (geojson['features'][0]['properties']['osm_id']) {
+          action = "modify";
+          imp.deleted.splice(imp.deleted.indexOf( geojson['features'][0]['properties']['osm_id'] ), 1);
+        }
         var osmChange = osm_geojson.geojson2osm(geojson, token(osmly.settings.db + 'changeset_id'));
         osmChange = osmChange.split('<osm version="0.6" generator="github.com/aaronlidman/osm-and-geojson">')
-            .join('<osmChange version="0.6" generator="OSMLY"><create>');
+            .join('<osmChange version="0.6" generator="OSMLY"><' + action + '>');
         osmChange = osmChange.split('</osm>')
             .join('');
-        osmChange += '</create>';
+        osmChange += '</' + action + '>';
         osmChange += buildDelete();
         osmChange += '</osmChange>';
 
@@ -427,7 +432,7 @@ osmly.import = (function() {
         imp.deleted.push(imp.mergeTags.osm_id);
 
         for (var tag in imp.mergeTags) {
-            if (tag.split('osm_').length === 1) {
+            if (tag.split('osm_').length === 1 || osmly.settings.merge_preserve) {
                 tags[tag] = imp.mergeTags[tag];
             }
         }
