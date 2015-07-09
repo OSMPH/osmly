@@ -32,7 +32,7 @@ var settings = {
         opacity: 1
     },
     users: [],
-    admins: [maning_dev],
+    admins: [],
     discardTags: [
     // https://github.com/systemed/iD/blob/master/data/discarded.json
         "created_by",
@@ -121,7 +121,7 @@ osmly.auth = function () {
         oauth_consumer_key: osmly.settings.consumerKey,
         auto: false,
         url: url,
-        landing: location.protocol + "//" + location.host + 'osmly/land.html'
+        landing: location.protocol + "//" + location.host + '/land.html'
     });
 
     auth.userAllowed = function() {
