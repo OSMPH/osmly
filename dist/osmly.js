@@ -3,8 +3,8 @@ var settings = {
     title: '',
     db: '',
     writeApi: 'http://api06.dev.openstreetmap.org',
-    oauth_secret: 'Mon0UoBHaO3qvfgwWrMkf4QAPM0O4lITd3JRK4ff',
-    consumerKey: 'yx996mtweTxLsaxWNc96R7vpfZHKQdoI9hzJRFwg',
+    oauth_secret: 'knRLXLUciJXpsT8RNyLcAZ2Fx0FJnBQhGmj3QPaU',
+    consumerKey: 'yHkRkfsqDVcDssBStgmkeVSm1mE1KF5p2Dt5bjRu',
     readApi: 'http://www.overpass-api.de/api/xapi?map?',
     context: {},
     origin: [0,0],
@@ -121,7 +121,7 @@ osmly.auth = function () {
         oauth_consumer_key: osmly.settings.consumerKey,
         auto: false,
         url: url,
-        landing: location.protocol + "//" + location.host + '/land.html'
+        landing: location.protocol + "//" + location.host + 'osmly/land.html'
     });
 
     auth.userAllowed = function() {
